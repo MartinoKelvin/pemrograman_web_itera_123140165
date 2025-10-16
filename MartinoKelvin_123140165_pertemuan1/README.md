@@ -12,12 +12,13 @@ Dengan aplikasi ini, pengguna dapat menambah tugas, menandai tugas yang sudah se
 
 Clone atau unduh repositori ini:
 ```bash
-git clone https://github.com/<username-kamu>/manajemen-tugas-mahasiswa.git
+git clone https://github.com/MartinoKelvin/pemrograman_web_itera_123140165.git
 
 ```
 Buka folder proyek:
 ```bash
-cd manajemen-tugas-mahasiswa
+cd pemrograman_web_itera_123140165
+cd MartinoKelvin_123140165_pertemuan1
 
 ```
 Jalankan aplikasi dengan membuka file index.html di browser (Chrome, Edge, Firefox, dsb).
