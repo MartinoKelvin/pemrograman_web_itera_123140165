@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Manajemen Tugas Mahasiswa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .task-item {
+            transition: all 0.3s ease;
+        }
+
+        .task-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+
+        .priority-high {
+            border-left: 4px solid #ef4444;
+        }
+
+        .priority-medium {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .priority-low {
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-50 to-purple-100 min-h-screen flex flex-col items-center p-4 md:p-6">
+    <div class="w-full max-w-4xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-indigo-800 mb-2 flex items-center justify-center gap-2">
+                <i class="fas fa-graduation-cap"></i>
+                Manajemen Tugas Mahasiswa
+            </h1>
+            <p class="text-gray-600">Kelola tugas kuliah Anda dengan mudah</p>
+        </header>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6 fade-in">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fas fa-plus-circle text-indigo-600"></i>
+                Tambah Tugas Baru
+            </h2>
+
+            <form id="taskForm" class="space-y-4">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Nama Tugas</label>
+                    <input type="text" id="taskName"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                        required placeholder="Contoh: Tugas Akhir Pemrograman Web">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Mata Kuliah</label>
+                        <input type="text" id="taskCourse"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                            required placeholder="Contoh: Pemrograman Web">
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Prioritas</label>
+                        <select id="taskPriority"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            <option value="low">Rendah</option>
+                            <option value="medium" selected>Sedang</option>
+                            <option value="high">Tinggi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Deadline</label>
+                    <input type="date" id="taskDeadline"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                        required>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition flex items-center justify-center gap-2">
+                    <i class="fas fa-plus"></i>
+                    Tambah Tugas
+                </button>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6 fade-in">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fas fa-filter text-indigo-600"></i>
+                Filter & Pencarian
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Status</label>
+                    <select id="filterStatus"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        <option value="all">Semua Tugas</option>
+                        <option value="done">Selesai</option>
+                        <option value="pending">Belum Selesai</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Cari Mata Kuliah</label>
+                    <div class="relative">
+                        <input id="filterCourse" placeholder="Ketik nama mata kuliah..."
+                            class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6 fade-in">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fas fa-list-check text-indigo-600"></i>
+                Daftar Tugas
+            </h2>
+
+            <div id="taskList" class="space-y-3">
+                <!-- Tugas akan ditampilkan di sini -->
+            </div>
+
+            <div id="emptyState" class="text-center py-8 text-gray-500 hidden">
+                <i class="fas fa-clipboard-list text-4xl mb-3"></i>
+                <p>Belum ada tugas. Tambahkan tugas pertama Anda!</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 fade-in">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fas fa-chart-pie text-indigo-600"></i>
+                Statistik
+            </h2>
+
+            <div id="taskStats" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden modal z-50">
+        <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Konfirmasi Hapus</h3>
+            <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus tugas ini? Tindakan ini tidak dapat
+                dibatalkan.</p>
+            <div class="flex justify-end gap-3">
+                <button id="cancelDelete"
+                    class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition">Batal</button>
+                <button id="confirmDelete"
+                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
