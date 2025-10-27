@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Dashboard - ES6+ Practicum</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📊 Personal Dashboard</h1>
+                <div class="header-info">
+                    <span id="current-date"></span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="tasks">📝 Tugas</button>
+            <button class="tab-btn" data-tab="notes">📌 Catatan</button>
+            <button class="tab-btn" data-tab="schedule">📅 Jadwal</button>
+            <button class="tab-btn" data-tab="weather">🌤️ Cuaca</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Tasks Section -->
+            <section id="tasks" class="tab-content active">
+                <div class="section-header">
+                    <h2>Daftar Tugas</h2>
+                    <button class="btn btn-primary" id="add-task-btn">+ Tambah Tugas</button>
+                </div>
+
+                <!-- Add Task Form -->
+                <form id="task-form" class="form hidden">
+                    <div class="form-group">
+                        <input type="text" id="task-input" placeholder="Masukkan tugas baru..." required>
+                    </div>
+                    <div class="form-group">
+                        <select id="task-priority">
+                            <option value="low">Prioritas Rendah</option>
+                            <option value="medium" selected>Prioritas Sedang</option>
+                            <option value="high">Prioritas Tinggi</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-task-btn">Batal</button>
+                    </div>
+                </form>
+
+                <!-- Tasks List -->
+                <div id="tasks-list" class="items-list"></div>
+            </section>
+
+            <!-- Notes Section -->
+            <section id="notes" class="tab-content">
+                <div class="section-header">
+                    <h2>Catatan</h2>
+                    <button class="btn btn-primary" id="add-note-btn">+ Tambah Catatan</button>
+                </div>
+
+                <!-- Add Note Form -->
+                <form id="note-form" class="form hidden">
+                    <div class="form-group">
+                        <input type="text" id="note-title" placeholder="Judul catatan..." required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="note-content" placeholder="Isi catatan..." rows="4" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-note-btn">Batal</button>
+                    </div>
+                </form>
+
+                <!-- Notes List -->
+                <div id="notes-list" class="items-list grid"></div>
+            </section>
+
+            <!-- Schedule Section -->
+            <section id="schedule" class="tab-content">
+                <div class="section-header">
+                    <h2>Jadwal</h2>
+                    <button class="btn btn-primary" id="add-schedule-btn">+ Tambah Jadwal</button>
+                </div>
+
+                <!-- Add Schedule Form -->
+                <form id="schedule-form" class="form hidden">
+                    <div class="form-group">
+                        <input type="text" id="schedule-title" placeholder="Judul jadwal..." required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tanggal</label>
+                            <input type="date" id="schedule-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Waktu</label>
+                            <input type="time" id="schedule-time" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="schedule-description" placeholder="Deskripsi..." rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-schedule-btn">Batal</button>
+                    </div>
+                </form>
+
+                <!-- Schedule List -->
+                <div id="schedule-list" class="items-list"></div>
+            </section>
+
+            <!-- Weather Section -->
+            <section id="weather" class="tab-content">
+                <div class="section-header">
+                    <h2>Informasi Cuaca</h2>
+                    <button class="btn btn-primary" id="refresh-weather-btn">🔄 Perbarui</button>
+                </div>
+
+                <!-- Weather Info -->
+                <div id="weather-container" class="weather-container">
+                    <div class="loading">Memuat data cuaca...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal untuk Edit -->
+    <div id="edit-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Edit Item</h2>
+            <form id="edit-form">
+                <div id="modal-body"></div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                    <button type="button" class="btn btn-secondary" id="close-modal-btn">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
